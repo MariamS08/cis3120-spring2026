@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 15 — Press Release to Plot</title>
+<style>
+  :root {
+    --navy: #1A2744;
+    --teal: #2563A8;
+    --teal-green: #0F7B72;
+    --ink: #1F2937;
+    --muted: #6B7280;
+    --rule: #E5E7EB;
+    --soft: #F8FAFC;
+    --code-bg: #F3F4F6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
+    background: #FFFFFF;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    line-height: 1.65;
+    font-size: 17px;
+  }
+  /* Banner — only instructor name and estimated reading time per project convention */
+  .banner {
+    border-top: 5px solid var(--navy);
+    border-bottom: 1px solid var(--rule);
+    padding: 1.4rem 0 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .banner .course {
+    font-size: 0.82rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+    font-family: Georgia, serif;
+  }
+  .banner h1 {
+    font-size: 1.95rem;
+    color: var(--navy);
+    margin: 0 0 0.7rem;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .banner .meta {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .banner .meta span {
+    display: inline-block;
+    margin-right: 1.4rem;
+  }
+  .banner .meta span strong { color: var(--ink); font-weight: 600; }
+
+  h2 {
+    color: var(--navy);
+    font-size: 1.45rem;
+    margin: 2.6rem 0 0.85rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--teal);
+    font-weight: 700;
+  }
+  h3 {
+    color: var(--teal);
+    font-size: 1.12rem;
+    margin: 1.6rem 0 0.5rem;
+    font-weight: 700;
+  }
+  p { margin: 0 0 1rem; }
+
+  code {
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 0.91em;
+    background: var(--code-bg);
+    color: var(--teal-green);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  ul, ol { padding-left: 1.55rem; margin: 0 0 1.1rem; }
+  li { margin-bottom: 0.4rem; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.3rem 0;
+    font-size: 0.95rem;
+  }
+  th {
+    background: var(--navy);
+    color: #FFFFFF;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-family: Georgia, serif;
+  }
+  td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--soft); }
+
+  .diagram {
+    margin: 1.6rem 0;
+    text-align: center;
+    background: var(--soft);
+    padding: 1.2rem 0.8rem;
+    border-radius: 4px;
+  }
+  .diagram svg { max-width: 100%; height: auto; }
+
+  .callout {
+    background: var(--soft);
+    border-left: 4px solid var(--teal);
+    padding: 0.85rem 1.05rem;
+    margin: 1.25rem 0;
+    font-size: 0.97em;
+  }
+  .callout strong { color: var(--navy); }
+
+  dl.glossary dt {
+    font-weight: 700;
+    color: var(--teal-green);
+    margin-top: 0.9rem;
+    font-size: 1rem;
+  }
+  dl.glossary dd {
+    margin-left: 0;
+    margin-bottom: 0.55rem;
+    padding-left: 0;
+  }
+
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="course">CIS 3120 &middot; Programming for Analytics</div>
+  <h1>Module 15 — Press Release to Plot</h1>
+  <div class="meta">
+    <span><strong>Instructor:</strong> Patrick Slattery</span>
+    <span><strong>Estimated reading time:</strong> 25 minutes</span>
+  </div>
+</div>
+
+<h2>What this module is about</h2>
+
+<p>Public companies in the United States are required to disclose material events to the Securities and Exchange Commission. Many of these disclosures concern physical operations: a new distribution center coming online, a chain of retail stores closing, a manufacturing plant relocating to a different state. The information is public, regularly updated, and structured at the level of the filing — but the substance of each announcement is buried inside paragraphs of prose written by corporate counsel. Extracting that substance at scale requires reading the text.</p>
+
+<p>This module presents the pipeline that performs that reading. The pipeline accepts a date range as input and produces an interactive geographic map as output. Between the input and the output, five stages coordinate three external services and one client-side library. Stage 1 retrieves candidate filings from SEC EDGAR. Stage 2 downloads the underlying press release text. Stage 3 sends each press release to the Anthropic API and asks the model to determine whether the filing announces a location event and, if so, to extract the city, state, and event type. Stage 4 looks up latitude and longitude coordinates for each location. Stage 5 renders the result on a folium map.</p>
+
+<p>The module extends the work begun in Module 14 in three concrete directions. It moves from free-form text generation to structured output via prompt engineering. It composes multiple APIs in sequence rather than calling a single one. And it uses authoritative public data — the SEC's own records — rather than synthetic examples.</p>
+
+<h2>Why this matters</h2>
+
+<p>The skill being practiced here is general. Many business questions take the form: <em>What is happening, where, and at what scale?</em> The answers exist in public text — in regulatory filings, in earnings calls, in trade press, in court records — but the text is unstructured. A human reading every 8-K filing for a single quarter is not a feasible workflow. A pipeline that reads them and returns a structured table is.</p>
+
+<p>The retail and logistics sectors illustrate the point. A regional analyst tracking competitor expansion needs to know which retailers are adding stores in which markets. A supply chain consultant needs to know where new distribution capacity is coming online. A commercial real estate firm needs early warning of which markets are seeing facility closures. None of these questions can be answered from a stock ticker or a press release headline alone; they require reading the body of the filing and extracting the substantive facts.</p>
+
+<p>The pipeline in this module is one instance of a broader pattern: retrieve relevant documents from a corpus, then use a language model to read each one and return structured data. That pattern appears in regulatory monitoring, contract review, customer support triage, and academic research. Module 15 establishes the pattern using a public dataset that students can run themselves at low cost. Module 16 will extend the same pattern to private document corpora using retrieval-augmented generation.</p>
+
+<h2>Background concepts</h2>
+
+<h3>The SEC EDGAR system</h3>
+
+<p>EDGAR — the Electronic Data Gathering, Analysis, and Retrieval system — is the SEC's central repository of corporate filings. Every public company in the United States files documents through EDGAR, and every document that EDGAR receives is made publicly available. The full-text search interface accepts a query phrase, a date range, and a form type, and returns the filings that match.</p>
+
+<p>The form type used in this module is Form 8-K, the "current report." Companies file an 8-K whenever a material event occurs between scheduled reports. Item codes inside the form indicate the nature of the event: Item 5.02 covers executive changes, Item 2.01 covers acquisitions, and so on. There is no dedicated item code for facility openings or closings; most such announcements are filed under Item 8.01, which is a general-purpose "Other Events" category. This is the structural reason why keyword search — rather than item-code filtering — is necessary for the question this module asks.</p>
+
+<p>Each 8-K filing is identified by an <strong>accession number</strong>, a string of digits assigned at the moment of submission. The narrative announcement is usually attached as an exhibit, conventionally <strong>Exhibit 99.1</strong>. The exhibit is a separate file inside the filing's directory on EDGAR's archive server. Constructing the URL of an exhibit requires the company's <strong>CIK</strong> (Central Index Key, a numeric company identifier), the accession number with hyphens removed, and the exhibit's filename — all three of which are returned by the search API.</p>
+
+<div class="callout">
+<strong>Header requirement.</strong> Both the SEC and OpenStreetMap require a descriptive <code>User-Agent</code> header containing a real name and a real email address on every request. Generic agents are rejected with HTTP 403. Students will replace a placeholder with their Baruch email before running the notebook.
+</div>
+
+<h3>Why combined-OR queries fail</h3>
+
+<p>The natural way to retrieve filings that match any of several phrases is a single query joining the phrases with the boolean operator <code>OR</code>. This pattern is documented as supported by EDGAR's full-text search engine. In practice, however, a query of the form <code>("new store" OR "new facility" OR "distribution center")</code> returns zero hits. The behavior is silent: no error is raised, the response is well-formed JSON, and the only signal that something is wrong is the empty result set.</p>
+
+<p>The pipeline therefore queries each phrase independently and merges the results, deduplicating by accession number. This is slower and more verbose than the documented approach would be, but it is the approach that actually works. Discovering such gaps between documented and actual behavior is itself a transferable skill: validate that an external service does what its documentation says before relying on the documentation in production code.</p>
+
+<h3>Asking the model for structured output</h3>
+
+<p>The language model in Stage 3 is asked to return a JSON object with a fixed schema: a boolean <code>is_location_event</code>, an <code>event_type</code>, a <code>city</code>, a <code>state</code>, and a one-sentence <code>summary</code>. This pattern — sometimes called <strong>structured output via prompt engineering</strong> or <strong>JSON-mode prompting</strong> — is the mechanism by which a language model becomes a reliable component of a larger pipeline. Downstream code does not parse free-form prose; it parses a dictionary.</p>
+
+<p>Two design choices in the system prompt deserve attention. First, the prompt instructs the model to return <code>is_location_event: false</code> for filings that mention a location only in passing — for example, the company's headquarters address in the boilerplate at the bottom of every press release. This single instruction is what raises the pipeline's precision from approximately 60 percent to 100 percent in prototype testing. Second, the prompt is explicit about output format: <em>"Return only the JSON object with no preamble, no markdown fences, no explanation."</em> The model is generally compliant with this instruction, but the parsing code in the pipeline is nonetheless defensive — it strips markdown fences if present and falls back to a default record on parse failure.</p>
+
+<p>The model used in this stage is the current Haiku model in the Claude 4.5 family (model identifier <code>claude-haiku-4-5-20251001</code>). Haiku is the appropriate choice because the task is binary classification followed by template-shaped extraction. There is no extended reasoning to perform and no creative writing to produce. A larger model in the same family would cost roughly six times as much, run several times more slowly, and — as the prototype data show — produce slightly lower recall for this particular task.</p>
+
+<h3>Geocoding and rate limits</h3>
+
+<p>The model returns a city and a state. To plot a marker on a map, a latitude and a longitude are required. The translation from a human-readable place name to geographic coordinates is called <strong>geocoding</strong>. This pipeline uses Nominatim, the geocoding service operated by the OpenStreetMap project, because it is free, well-documented, and adequate for city-level precision.</p>
+
+<p>Nominatim's terms of use require a maximum of one request per second from any single client. The pipeline enforces this with a 1.1-second pause between calls, deliberately leaving a small margin. Failing to respect this limit results in IP-level rate limiting that is difficult to diagnose, because the affected requests succeed individually but fail in aggregate. The SEC's EDGAR service imposes a similar but more permissive limit of ten requests per second; the pipeline uses a 0.15-second pause between EDGAR calls.</p>
+
+<h2>The pipeline at a glance</h2>
+
+<div class="diagram">
+<svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-stage pipeline diagram">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563A8"/>
+    </marker>
+  </defs>
+  <!-- five rounded boxes -->
+  <g font-family="Georgia, serif" font-size="13" fill="#1A2744">
+    <rect x="10"  y="35" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#1A2744" stroke-width="1.5"/>
+    <text x="70"  y="60" text-anchor="middle" font-weight="700">Stage 1</text>
+    <text x="70"  y="80" text-anchor="middle" fill="#374151">EDGAR search</text>
+
+    <rect x="155" y="35" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#1A2744" stroke-width="1.5"/>
+    <text x="215" y="60" text-anchor="middle" font-weight="700">Stage 2</text>
+    <text x="215" y="80" text-anchor="middle" fill="#374151">Exhibit fetch</text>
+
+    <rect x="300" y="35" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#0F7B72" stroke-width="2"/>
+    <text x="360" y="60" text-anchor="middle" font-weight="700" fill="#0F7B72">Stage 3</text>
+    <text x="360" y="80" text-anchor="middle" fill="#374151">Anthropic API</text>
+
+    <rect x="445" y="35" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#1A2744" stroke-width="1.5"/>
+    <text x="505" y="60" text-anchor="middle" font-weight="700">Stage 4</text>
+    <text x="505" y="80" text-anchor="middle" fill="#374151">Geocode</text>
+
+    <rect x="590" y="35" width="120" height="60" rx="6" fill="#FFFFFF" stroke="#1A2744" stroke-width="1.5"/>
+    <text x="650" y="60" text-anchor="middle" font-weight="700">Stage 5</text>
+    <text x="650" y="80" text-anchor="middle" fill="#374151">Folium render</text>
+
+    <!-- arrows -->
+    <line x1="132" y1="65" x2="153" y2="65" stroke="#2563A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="277" y1="65" x2="298" y2="65" stroke="#2563A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="422" y1="65" x2="443" y2="65" stroke="#2563A8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="567" y1="65" x2="588" y2="65" stroke="#2563A8" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- input/output labels -->
+    <text x="70"  y="22" text-anchor="middle" font-style="italic" fill="#6B7280" font-size="11">Date range in</text>
+    <text x="650" y="22" text-anchor="middle" font-style="italic" fill="#6B7280" font-size="11">Map out</text>
+  </g>
+</svg>
+</div>
+
+<table>
+  <thead>
+    <tr><th style="width: 80px;">Stage</th><th>Purpose</th><th>Service</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Stage 1</strong></td><td>Retrieve candidate 8-K filings from EDGAR</td><td>SEC EDGAR full-text search</td></tr>
+    <tr><td><strong>Stage 2</strong></td><td>Fetch the press release text from each filing</td><td>SEC EDGAR archive</td></tr>
+    <tr><td><strong>Stage 3</strong></td><td>Classify and extract with the Anthropic API</td><td>Anthropic Claude API (Haiku 4.5)</td></tr>
+    <tr><td><strong>Stage 4</strong></td><td>Geocode the locations</td><td>OpenStreetMap Nominatim</td></tr>
+    <tr><td><strong>Stage 5</strong></td><td>Render the folium map</td><td>folium (client-side)</td></tr>
+  </tbody>
+</table>
+
+<p>Each stage produces input to the next. The boundaries between stages are deliberate: each one can be tested in isolation, swapped for a different implementation, or rerun without rerunning the upstream stages. Such clean staging is the basic discipline of any production data pipeline.</p>
+
+<h3>The recall vs precision tradeoff</h3>
+
+<p>Stage 1 is tuned for high recall. The keyword phrases are chosen to capture as many candidate filings as possible, even at the cost of returning many filings that turn out to be irrelevant. Stage 3 is tuned for high precision. The system prompt instructs the model to filter aggressively, returning <code>is_location_event: false</code> for any filing that does not unambiguously announce a location event. This division of labor — broad retrieval followed by strict filtering — is <strong>the recall vs precision tradeoff</strong> that the pipeline is designed to manage. It is the same pattern that underlies retrieval-augmented generation, which Module 16 will introduce.</p>
+
+<h2>What you will produce</h2>
+
+<p>The deliverable is a folium HTML map embedded in a Jupyter notebook cell. The map displays one marker per location event identified by the pipeline, with markers color-coded by event type — green for openings, red for closings, orange for relocations, blue for expansions, and gray for events that did not fit into the four primary categories. Each marker carries a popup containing the company name, the event summary written by the model, and a link to the original filing on EDGAR.</p>
+
+<p>A typical run with the configured 30-day window returns approximately 100 candidate filings, of which 15 to 20 are confirmed location events. The end-to-end runtime is approximately four minutes, dominated by the geocoding stage's mandatory one-second pauses. The total cost in API charges is approximately $0.30 per run.</p>
+
+<p>Beyond the map itself, the notebook produces two intermediate artifacts that are useful in their own right: a deduplicated table of every candidate filing with its company, date, and exhibit URL; and a structured table of every confirmed location event with its city, state, and coordinates. Either table can be exported to a spreadsheet for further analysis.</p>
+
+<h2>What you should be able to do afterward</h2>
+
+<p>After completing the reading and the in-class walkthrough, you will be able to:</p>
+<ol>
+  <li>Query the SEC EDGAR full-text search API to retrieve filings matching a date range and a set of keywords.</li>
+  <li>Construct multi-phrase queries that work around the documented but non-functional combined-OR query syntax.</li>
+  <li>Fetch and clean HTML content from EDGAR exhibits using <code>requests</code> and <code>BeautifulSoup</code>.</li>
+  <li>Design a system prompt that elicits structured JSON output from Claude.</li>
+  <li>Parse model output defensively, handling occasional formatting variations.</li>
+  <li>Geocode US city/state pairs using OpenStreetMap Nominatim with appropriate rate limiting.</li>
+  <li>Construct an interactive folium map with color-encoded markers and informative popups.</li>
+  <li>Reason about model selection in terms of task fit, choosing Haiku for classification and extraction work and reserving Opus for tasks that require deep reasoning.</li>
+  <li>Articulate the recall vs precision tradeoff and explain how a multi-stage pipeline manages it.</li>
+</ol>
+
+<h2>Glossary</h2>
+
+<dl class="glossary">
+  <dt>The pipeline</dt>
+  <dd>The five-stage workflow that takes a date range as input and produces an interactive map as output. Used throughout this module to refer to the overall system.</dd>
+
+  <dt>Stage 1 through Stage 5</dt>
+  <dd>The five components of the pipeline, in order: EDGAR retrieval, exhibit fetch, Anthropic API classification and extraction, geocoding, and folium rendering. The numbering is fixed; each stage is referred to consistently as "Stage <em>N</em>" in capitalized form.</dd>
+
+  <dt>8-K filing</dt>
+  <dd>A "current report" submitted by a public company to the SEC to disclose a material event that occurred between scheduled periodic reports.</dd>
+
+  <dt>Accession number</dt>
+  <dd>The unique identifier assigned by EDGAR to each filing at the moment of submission. Used in this module to deduplicate the multi-phrase search results and to construct exhibit URLs. Preferred over the term "filing ID."</dd>
+
+  <dt>CIK (Central Index Key)</dt>
+  <dd>A numeric identifier assigned by the SEC to each filer. Used together with the accession number to locate a filing's directory on EDGAR's archive server.</dd>
+
+  <dt>Exhibit 99.1 (or "the exhibit")</dt>
+  <dd>The conventional attachment slot used for a press release filed alongside an 8-K. The narrative content of the announcement lives in the exhibit, not in the form itself.</dd>
+
+  <dt>Structured output via prompt engineering (JSON-mode prompting)</dt>
+  <dd>The technique of writing a system prompt that constrains a language model to return a JSON object with a fixed schema, so that downstream code can parse the output as a dictionary rather than as free-form prose.</dd>
+
+  <dt>The recall vs precision tradeoff</dt>
+  <dd>The fundamental tension in any retrieval system between returning too many irrelevant items (low precision) and missing relevant items (low recall). In this pipeline, Stage 1 is tuned for recall and Stage 3 is tuned for precision.</dd>
+
+  <dt>Geocoding</dt>
+  <dd>The process of converting a human-readable place name (such as "Austin, TX") into latitude and longitude coordinates that can be plotted on a map.</dd>
+
+  <dt>Nominatim</dt>
+  <dd>The free geocoding service operated by the OpenStreetMap project. Used in Stage 4 of the pipeline. Subject to a one-request-per-second rate limit that the pipeline enforces with a 1.1-second pause between calls.</dd>
+
+  <dt>Folium</dt>
+  <dd>A Python library that produces interactive HTML maps from Python objects. Renders entirely on the client; no map server is required at runtime.</dd>
+</dl>
+
+<div class="footer">
+  <p>CIS 3120 &middot; Module 15 &middot; Press Release to Plot &middot; Reading page</p>
+</div>
+
+</body>
+</html>
