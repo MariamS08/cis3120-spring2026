@@ -23,13 +23,13 @@ FINANCIAL_SERVICES_TICKERS = [
     # Money-center banks
     "JPM", "BAC", "WFC", "C",
     # Regional banks
-    "PNC", "USB", "TFC",
+    "PNC", "USB", "TFC", "RF", "FNB", "HBAN", "AUB",
     # Asset management
-    "BLK", "BX",
+    "BLK", "BX", "GS", "MS", "SCHW",
     # Insurance
-    "MET", "PRU",
+    "MET", "PRU", "ALL", "TRV",
     # Payments
-    "V", "MA", "AXP",
+    "V", "MA", "AXP", "COF", "DFS",
 ]
 
 FINANCIAL_SERVICES_PHRASES = [
@@ -43,6 +43,29 @@ FINANCIAL_SERVICES_PHRASES = [
     '"operations center"',
     '"data center"',
     '"new location"',
+    # Added phrases
+    '"branch network"',
+    '"financial center"',
+    '"banking center"',
+    '"new financial center"',
+    '"new banking center"',
+    '"office relocation"',
+    '"new office"',
+    '"regional headquarters"',
+    '"operations hub"',
+    '"service center"',
+    '"customer service center"',
+    '"call center"',
+    '"corporate office"',
+    '"office opening"',
+    '"office expansion"',
+    '"branch relocation"',
+    '"relocated branch"',
+    '"new headquarters"',
+    '"headquarters relocation"',
+    '"technology center"',
+    '"processing center"',
+    '"loan production office"',
     
 ]
 
