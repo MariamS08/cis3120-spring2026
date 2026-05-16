@@ -12,7 +12,7 @@ mixes hotel-style and airline-style location events that may warrant separate
 treatment in your map. Identifying these limitations and proposing fixes is
 the methodology section's purpose.
 
-Reference: docs/MP03_Assignment.docx, Section 3.
+Reference: docs/MP03_Assignment.docx, Section 3..
 """
 
 # ──────────────────────────────────────────────────────────────────────────
