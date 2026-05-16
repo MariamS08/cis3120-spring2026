@@ -22,12 +22,16 @@ Reference: docs/MP03_Assignment.docx, Section 3.
 FINANCIAL_SERVICES_TICKERS = [
     # Money-center banks
     "JPM", "BAC", "WFC", "C",
+
     # Regional banks
     "PNC", "USB", "TFC", "RF", "FNB", "HBAN", "AUB",
+
     # Asset management
     "BLK", "BX", "GS", "MS", "SCHW",
+
     # Insurance
     "MET", "PRU", "ALL", "TRV",
+
     # Payments
     "V", "MA", "AXP", "COF", "DFS",
 ]
