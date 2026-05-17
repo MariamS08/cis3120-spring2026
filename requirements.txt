@@ -1,0 +1,16 @@
+# CIS 3120 — Programming for Analytics
+# Spring 2026 — Module 15 / MP03 dependencies
+#
+# Install in Colab with:
+#   !pip install anthropic folium --quiet
+# (the remaining packages are present in the Colab base image)
+#
+# Install locally with:
+#   pip install -r requirements.txt
+
+anthropic>=0.40.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+folium>=0.15.0
+pandas>=2.0.0
+nbformat>=5.9.0
