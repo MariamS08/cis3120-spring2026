@@ -2,10 +2,10 @@
 
 ### 6.1 Ticker-list rationale
 
-*TODO: For each industry, justify any modifications to the seeded ticker list. Identify what the seeded list undercounts or overcounts and explain how your changes address those limitations.*
-* The seeded ticker list shows both industries, but it was changed in order to show the location-based activity that was going.
-* For financial services, the original list focused on money-center, regional banking institutions and didnt really go indepth on other pyshical infrastructure chnages like data centers, operations hubs, and corporate office relocations. So in order to fix this the team made sure to cover accross banking, asset management, insurance, and payment networks in oder to ensure a wide variety of location-driven events
-* For travel and hospitality, the seeded list already had the hotels, arilines, cruise lines, and online travel platforms, but since these gave different locations. So the final list was done in order to maintain balance accross the assets and network bases, making sure that the property level and route are represented 
+#TODO: For each industry, justify any modifications to the seeded ticker list. Identify what the seeded list undercounts or overcounts and explain how your changes address those limitations.*
+#The seeded ticker list shows both industries, but it was changed in order to show the location-based activity that was going.
+#For financial services, the original list focused on money-center, regional banking institutions and didnt really go indepth on other pyshical infrastructure chnages like data centers, operations hubs, and corporate office relocations. So in order to fix this the team made sure to cover accross banking, asset management, insurance, and payment networks in oder to ensure a wide variety of location-driven events
+# For travel and hospitality, the seeded list already had the hotels, arilines, cruise lines, and online travel platforms, but since these gave different locations. So the final list was done in order to maintain balance accross the assets and network bases, making sure that the property level and route are represented 
 
 ### 6.2 Search-phrase rationale
 
